@@ -27,10 +27,12 @@ readdirSync('./rest').map((r) => app.use('/api', require(`./rest/${r}`)));
 const typeDefs = mergeTypeDefs(loadFilesSync(path.join(__dirname, './typeDefs')));
 
 //Resolvers
+const resolvers = mergeResolvers(loadFilesSync(path.join(__dirname, './resolvers')));
 
 //apollo server sign 
 const apolloServer = new ApolloServer({
     typeDefs,
+    resolvers
 });
 
 // vinculacion apollo-server with express
@@ -39,4 +41,5 @@ apolloServer.applyMiddleware({app});
 // server listen
 app.listen(process.env.PORT, ()=>{
     console.log(`Server listening on port ${process.env.PORT}`);
+    console.log(`Graphql Endpoint: http://localhost:${process.env.PORT}${apolloServer.graphqlPath}`)
 });
