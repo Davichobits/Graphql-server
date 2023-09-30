@@ -32,7 +32,8 @@ const resolvers = mergeResolvers(loadFilesSync(path.join(__dirname, './resolvers
 //apollo server sign 
 const apolloServer = new ApolloServer({
     typeDefs,
-    resolvers
+    resolvers,
+    context: ({req, res}) => ({req, res})
 });
 
 // vinculacion apollo-server with express
